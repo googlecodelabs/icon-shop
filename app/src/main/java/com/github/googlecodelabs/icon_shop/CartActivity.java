@@ -120,14 +120,18 @@ public class CartActivity extends AppCompatActivity {
         updateCardInfo();
     }
 
+    private long getCartBalance() {
+        long credits = 0;
+        for (App.ItemData item : mAdapter.mDataSet) credits += item.mPrice;
+        return credits;
+    }
+
     private void updateCardInfo() {
         if (mAdapter.getItemCount() == 0) {
             getCardMessage().setText("Cart is empty");
             mFloatingActionButton.setVisibility(View.GONE);
         } else {
-            int credits = 0;
-            for (App.ItemData item : mAdapter.mDataSet) credits += item.mPrice;
-            getCardMessage().setText("Cart total " + credits + " credits");
+            getCardMessage().setText("Cart total " + getCartBalance() + " credits");
             mFloatingActionButton.setVisibility(View.VISIBLE);
         }
     }
