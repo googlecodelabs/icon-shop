@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.djabarov.experimental.material_design"
+        applicationId "com.github.googlecodelabs.icon_shop"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
