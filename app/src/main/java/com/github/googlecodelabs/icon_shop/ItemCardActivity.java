@@ -27,9 +27,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-/**
- * Created by georged on 5/4/16.
- */
 public class ItemCardActivity extends AppCompatActivity {
     public static final String INTENT_EXTRA_ITEM = "item";
     private App.ItemData mItem;
@@ -47,14 +44,26 @@ public class ItemCardActivity extends AppCompatActivity {
 
         mItem = App.getItem(getIntent().getStringExtra(INTENT_EXTRA_ITEM));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton actionButton = (FloatingActionButton) findViewById(R.id.fab);
+        actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mItem == null) return;
                 App.addItemToCart(mItem);
-                Snackbar.make(view, "Icon \"" + mItem.mName + "\" added to cart", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar ok = Snackbar.make(view, "Icon \"" + mItem.mName + "\" added to cart", Snackbar.LENGTH_LONG)
+                        .setAction("Home", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                NavUtils.navigateUpFromSameTask(ItemCardActivity.this);
+                            }
+                        });
+                ok.setCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar snackbar, int event) {
+                        NavUtils.navigateUpFromSameTask(ItemCardActivity.this);
+                    }
+                });
+                ok.show();
             }
         });
 
